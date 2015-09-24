@@ -1,7 +1,7 @@
 ---
 # This playbook used to demo OpenStack Juno user, role, image and volume features. 
 
-- hosts: juno_demo
+- hosts: util_container
   user: root
   remote_user: root
   sudo: yes
