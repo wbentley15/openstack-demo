@@ -1,0 +1,25 @@
+---
+
+- name: Import new VM image to DEV environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} image-create --name ubuntu-server-14.04 --is-public true --container-format bare --disk-format qcow2 --copy-from http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img
+  
+- name: Import new VM image to DEV environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} image-create --name coreos-alpha --is-public true --container-format bare --disk-format qcow2 --copy-from http://d7cc6e67f38cfae80d7e-a1a41bbff83d09523ecc267e8286adfc.r72.cf1.rackcdn.com/coreos_production_openstack_image.img
+  
+- name: Import new VM image to TST environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} image-create --name centos-6.5 --is-public true --container-format bare --disk-format qcow2 --copy-from http://mirror.catn.com/pub/centos/6.5/os/x86_64/images/install.img
+  
+- name: Import new VM image to QA environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} image-create --name rhel-5.6 --is-public false --container-format bare --disk-format qcow2 --copy-from http://c250663.r63.cf1.rackcdn.com/rhel56_x86_64.qcow2
+
+- name: Assign VM image to DEV environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} member-create ubuntu-server-14.04 dev01
+  
+- name: Assign VM image to TST environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} member-create centos-6.5 tst01
+  
+- name: Assign VM image to QA environment
+  command: glance --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} member-create rhel-5.6 qa01
+  
+- name: Create new instance flavor
+  command: nova --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} flavor-create m1.tibco.custom m1tibcust01 4096 20 4

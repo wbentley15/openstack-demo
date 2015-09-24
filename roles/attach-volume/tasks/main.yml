@@ -1,0 +1,4 @@
+---
+
+- name: Attach log volume to TST instance
+  command: nova --os-username={{ TST_USERNAME }} --os-password={{ TST_PASSWORD }} --os-tenant-name={{ TST_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} volume-attach demo-centos-inst {{ VOL_ID }} /dev/log

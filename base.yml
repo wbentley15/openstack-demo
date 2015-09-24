@@ -1,0 +1,11 @@
+---
+# This playbook used to demo OpenStack Juno user, role, image and volume features. 
+
+- hosts: juno_demo
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - create-users-env
+    - add-new-vmimage
+    - create-log-volume

@@ -1,0 +1,4 @@
+---
+
+- name: Create log volume
+  command: cinder --os-username={{ OS_USERNAME }} --os-password={{ OS_PASSWORD }} --os-tenant-name={{ OS_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} create --display-name log_vol01 5

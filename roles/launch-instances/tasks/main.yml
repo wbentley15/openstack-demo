@@ -1,0 +1,13 @@
+---
+
+- name: Launch new instances in DEV environment
+  command: nova --os-username={{ DEV_USERNAME }} --os-password={{ DEV_PASSWORD }} --os-tenant-name={{ DEV_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} boot --flavor m1.small --image coreos-alpha --nic net-id={{ TENANT_NETWORK }} --security-group default --key-name {{ KEY_NAME }} demo-coreos-inst
+  
+- name: Launch new instances in DEV environment
+  command: nova --os-username={{ DEV_USERNAME }} --os-password={{ DEV_PASSWORD }} --os-tenant-name={{ DEV_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} boot --flavor m1.small --image ubuntu-server-14.04 --nic net-id={{ TENANT_NETWORK }} --security-group default --key-name {{ KEY_NAME }} demo-ubuntu-inst
+  
+- name: Launch new instances in TST environment
+  command: nova --os-username={{ TST_USERNAME }} --os-password={{ TST_PASSWORD }} --os-tenant-name={{ TST_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} boot --flavor m1.small --image centos-6.5 --nic net-id={{ TENANT_NETWORK }} --security-group default --key-name {{ KEY_NAME }} demo-centos-inst
+
+- name: Launch new instances in QA environment
+  command: nova --os-username={{ QA_USERNAME }} --os-password={{ QA_PASSWORD }} --os-tenant-name={{ QA_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} boot --flavor m1.tibco.custom --image rhel-5.6 --nic net-id={{ TENANT_NETWORK }} --security-group default --key-name {{ KEY_NAME }} demo-rhel-inst

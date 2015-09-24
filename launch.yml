@@ -1,0 +1,10 @@
+---
+# This playbook used to demo OpenStack Juno instance creation features. 
+
+- hosts: juno_demo
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - launch-instances
+    - attach-volume

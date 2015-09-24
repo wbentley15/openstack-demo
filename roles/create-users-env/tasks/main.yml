@@ -1,0 +1,43 @@
+---
+
+- name: Create Automation user
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-create --name=ansible --pass=passwd
+
+- name: Assign Automation user to admin role
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-role-add --user=ansible --tenant=admin --role=admin
+
+- name: Create Developer user
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-create --name=dev --pass=passwd
+
+- name: Create TST user
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-create --name=tst --pass=passwd
+
+- name: Create QA user
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-create --name=qa --pass=passwd
+
+- name: Create DEV environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} tenant-create --name=dev01 --description="Dev01 Env"
+  
+- name: Create TST environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} tenant-create --name=tst01 --description="TST01 Env"
+  
+- name: Create QA environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} tenant-create --name=qa01 --description="QA01 Env"  
+
+- name: Assign Developer user to admin role and DEV environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-role-add --user=dev --tenant=dev01 --role=_member_
+
+- name: Assign TST user to admin role and TST environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-role-add --user=tst --tenant=tst01 --role=_member_
+
+- name: Assign QA user to admin role and QA environment
+  command: keystone --os-token={{ OS_SERVICE_TOKEN }} --os-endpoint={{ OS_AUTH_URL }} user-role-add --user=qa --tenant=qa01 --role=_member_
+  
+- name: Create DEV user keypair
+  command: nova --os-username={{ DEV_USERNAME }} --os-password={{ DEV_PASSWORD }} --os-tenant-name={{ DEV_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} keypair-add --pub-key /root/.ssh/id_rsa.pub controller-key
+  
+- name: Create TST user keypair
+  command: nova --os-username={{ TST_USERNAME }} --os-password={{ TST_PASSWORD }} --os-tenant-name={{ TST_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} keypair-add --pub-key /root/.ssh/id_rsa.pub controller-key
+  
+- name: Create QA user keypair
+  command: nova --os-username={{ QA_USERNAME }} --os-password={{ QA_PASSWORD }} --os-tenant-name={{ QA_TENANT_NAME }} --os-auth-url={{ OS_AUTH_URL }} keypair-add --pub-key /root/.ssh/id_rsa.pub controller-key
